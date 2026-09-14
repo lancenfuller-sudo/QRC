@@ -62,10 +62,11 @@
           { id: "subs", label: "Subscriptions (streaming, apps)", amount: 95, cutDefault: 40 },
           { id: "dining", label: "Dining out / delivery", amount: 520, cutDefault: 200 },
           { id: "memberships", label: "Unused memberships", amount: 85, cutDefault: 85 },
-          { id: "impulse", label: "Impulse / lifestyle drag", amount: 200, cutDefault: 100 }
+          { id: "impulse", label: "Impulse / lifestyle drag", amount: 200, cutDefault: 100 },
+          { id: "sol_above_earn", label: "Standard of living above value earned", amount: 650, cutDefault: 325, note: "Lifestyle spend that outruns earned capacity — educational drag, not judgment." }
         ],
         takeHome: 9200,
-        surplusHint: "Roughly $800–1,100/mo may open after intentional burn-down of lifestyle drag."
+        surplusHint: "Roughly $800–1,400/mo may open after intentional burn-down, including closing the gap where standard of living sits above value earned."
       },
       allocation: [
         { id: "cash", label: "Cash / reserves", pct: 8, band: "ice", role: "Preserve — liquidity for shocks" },
@@ -146,10 +147,11 @@
           { id: "lifestyle_entities", label: "Overlapping lifestyle entities", amount: 12000, cutDefault: 5000 },
           { id: "duplicate_services", label: "Duplicate advisors / services", amount: 8000, cutDefault: 4000 },
           { id: "unmanaged_fees", label: "Unmanaged layered fees", amount: 6000, cutDefault: 3000 },
-          { id: "discretionary", label: "Unscoped discretionary spend", amount: 9000, cutDefault: 4000 }
+          { id: "discretionary", label: "Unscoped discretionary spend", amount: 9000, cutDefault: 4000 },
+          { id: "sol_above_earn", label: "Standard of living above value earned", amount: 15000, cutDefault: 7500, note: "Lifestyle / distribution level above sustainable earned + portfolio capacity — educational drag." }
         ],
         takeHome: 120000,
-        surplusHint: "Educational: reclaiming drag can fund DAF overflow or reserves — not a performance claim.",
+        surplusHint: "Educational: reclaiming drag — including standard of living above value earned — can fund DAF overflow or reserves. Not a performance claim.",
         annualSpend: 1200000,
         philanthropyTarget: 800000
       },
@@ -592,17 +594,18 @@
       });
       html += "</ul>";
       html += '<h4 class="tool-subhead">Lifestyle drag <span class="tool-tag">Adjust cuts</span></h4>';
-      html += '<p class="tool-hint">Educational categories — not an accusation. Slide to reclaim surplus into the reservoir.</p>';
+      html += '<p class="tool-hint">Educational categories — not an accusation. Slide to reclaim surplus into the reservoir, including where standard of living sits above value earned.</p>';
       html += '<ul class="burn-cats burn-drag">';
       burn.dragCategories.forEach(function (c) {
         var cut = state.cuts[c.id] || 0;
         html +=
-          '<li class="burn-cat is-drag">' +
+          '<li class="burn-cat is-drag' + (c.id === "sol_above_earn" ? " is-sol" : "") + '">' +
           '<div class="burn-cat-top">' +
           '<span class="burn-label">' + escapeHtml(c.label) + "</span>" +
           '<span class="burn-amt" data-cut-label="' + c.id + '">' +
           money(c.amount) + " → cut " + money(cut) +
           "</span></div>" +
+          (c.note ? '<p class="burn-note">' + escapeHtml(c.note) + "</p>" : "") +
           '<label class="burn-slider-label"><span class="sr-only">Cut ' + escapeHtml(c.label) + "</span>" +
           '<input type="range" min="0" max="' + c.amount + '" step="5" value="' + cut +
           '" data-cut="' + c.id + '"></label></li>';

@@ -1202,3 +1202,15 @@ strong { font-weight: 600; }
   gap: 0.65rem;
   margin-bottom: 1.5rem;
 }
+
+
+/* Burn-down notes */
+.burn-note {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.burn-cat.is-sol {
+  border-color: color-mix(in srgb, var(--gold) 45%, transparent);
+}
