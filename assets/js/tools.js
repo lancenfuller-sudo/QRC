@@ -80,6 +80,17 @@
         horizon: "Working decades ahead — surplus can favor compound/grow sleeves once reserves are sound.",
         liquidity: "Cash buffer ~2 months of spend in this example; strengthening the reservoir is often the first lesson.",
         overflow: "Giving is aspirational overflow after the vessel holds. Not a required allocation."
+      },
+      timeline: {
+        current: "steward",
+        currentLabel: "Steward Current (illustrative lean)",
+        years: [
+          { label: "Now", note: "Fill Ice — build cash reserves; start Water in retirement vessels.", bands: { ice: 40, water: 45, steam: 15, overflow: 0 } },
+          { label: "+5y", note: "Ice sound; Water compounds; introduce Steam only with surplus.", bands: { ice: 25, water: 45, steam: 28, overflow: 2 } },
+          { label: "+10y", note: "Peak earning years — Steam can rise; Water stays the spine.", bands: { ice: 15, water: 40, steam: 40, overflow: 5 } },
+          { label: "+20y", note: "Horizon shortens — dial Steam down; thicken Water & Ice.", bands: { ice: 22, water: 48, steam: 22, overflow: 8 } },
+          { label: "+30y", note: "Preserve & compound; Overflow if the vessel is full.", bands: { ice: 30, water: 45, steam: 12, overflow: 13 } }
+        ]
       }
     },
     fo: {
@@ -168,6 +179,17 @@
         horizon: "Multi-generational — allocation maps purpose (preserve / compound / grow / overflow), not a promised rate.",
         liquidity: "Illiquid OpCo is labeled illustrative and excluded from “spendable” framing.",
         overflow: "Philanthropy target ~$800k/yr as overflow once vessels and distributions are intentional."
+      },
+      timeline: {
+        current: "open",
+        currentLabel: "Open Current (illustrative lean)",
+        years: [
+          { label: "Now", note: "Ice for ops; Water core; Steam growth sleeve; Overflow via DAF.", bands: { ice: 18, water: 40, steam: 32, overflow: 10 } },
+          { label: "+5y", note: "Scale Steam carefully; keep Water trust/quality spine.", bands: { ice: 14, water: 38, steam: 36, overflow: 12 } },
+          { label: "+10y", note: "Multi-entity balance — Steam for growth vessels, Water for stewardship.", bands: { ice: 12, water: 36, steam: 36, overflow: 16 } },
+          { label: "+20y", note: "Next-gen handoff — more Water structure; Overflow rises with capacity.", bands: { ice: 15, water: 40, steam: 25, overflow: 20 } },
+          { label: "+30y", note: "Generational preserve + Overflow mission; Steam selective.", bands: { ice: 20, water: 42, steam: 18, overflow: 20 } }
+        ]
       }
     }
   };
@@ -714,6 +736,72 @@
           "</ul>" +
           '<p class="tool-hint mb-0">Qualitative bands only — no promised rates of return.</p>';
       }
+
+      renderTimeline(p);
+    }
+
+    function bandBar(bands) {
+      return (
+        '<div class="timeline-bands" aria-hidden="true">' +
+        '<span class="b-ice" style="width:' + bands.ice + '%"></span>' +
+        '<span class="b-water" style="width:' + bands.water + '%"></span>' +
+        '<span class="b-steam" style="width:' + bands.steam + '%"></span>' +
+        '<span class="b-overflow" style="width:' + bands.overflow + '%"></span>' +
+        "</div>"
+      );
+    }
+
+    function renderTimeline(p) {
+      var el = qs("[data-risk-timeline]");
+      if (!el || !p.timeline) return;
+      var otherId = p.id === "mc" ? "fo" : "mc";
+      var other = PROFILES[otherId];
+      var years = p.timeline.years;
+      var html = "";
+      html += "<div class=\"risk-timeline\">";
+      html += "<h3>Horizon timeline</h3>";
+      html +=
+        '<p class="timeline-lede">How Ice / Water / Steam / Overflow emphasis can shift by year — for this example and across Steward vs Open currents. Qualitative teaching aid only; not a schedule of returns.</p>';
+      html +=
+        '<div class="timeline-currents">' +
+        '<div class="timeline-current steward"><h4>Steward Current</h4><p>Purpose-led household and stewardship framing — often more Ice early, Water as spine, Steam only with surplus, Overflow when the vessel holds.</p></div>' +
+        '<div class="timeline-current open"><h4>Open Current</h4><p>Broader multi-entity / growth framing — Steam can sit larger earlier, with Water structures and Overflow (e.g. DAF) as capacity grows.</p></div>' +
+        "</div>";
+      html +=
+        '<ul class="risk-timeline-legend" aria-label="Band colors">' +
+        '<li><i class="sw-ice"></i> Ice · Preserve</li>' +
+        '<li><i class="sw-water"></i> Water · Compound</li>' +
+        '<li><i class="sw-steam"></i> Steam · Grow</li>' +
+        '<li><i class="sw-overflow"></i> Overflow · Give</li>' +
+        "</ul>";
+      html += '<div class="timeline-axis"><span></span>';
+      years.forEach(function (y) {
+        html += "<span>" + escapeHtml(y.label) + "</span>";
+      });
+      html += "</div>";
+
+      function trackRow(label, tl) {
+        var row = '<div class="timeline-track"><div class="timeline-track-label">' + escapeHtml(label) + "</div>";
+        tl.years.forEach(function (y) {
+          row +=
+            '<div class="timeline-cell">' +
+            bandBar(y.bands) +
+            '<p class="yr-note">' +
+            escapeHtml(y.note) +
+            "</p></div>";
+        });
+        row += "</div>";
+        return row;
+      }
+
+      html += trackRow(p.shortName.replace(" (illustrative)", ""), p.timeline);
+      html += trackRow(other.shortName.replace(" (illustrative)", ""), other.timeline);
+      html +=
+        '<p class="timeline-footnote">Active example leans <strong>' +
+        escapeHtml(p.timeline.currentLabel) +
+        "</strong>. Compare both rows to see how the same year marks can look different by vessel size and current. Percent bars are emphasis weights — not portfolio weights or forecast returns.</p>";
+      html += "</div>";
+      el.innerHTML = html;
     }
 
     var initial = bindProfileSwitcher(load);

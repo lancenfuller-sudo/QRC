@@ -121,8 +121,9 @@ strong { font-weight: 600; }
 .footer-logos > a:hover { opacity: 0.92; }
 .footer-logos img {
   display: block;
-  width: 200px;
-  height: auto;
+  width: 200px !important;
+  max-width: 200px !important;
+  height: auto !important;
   object-fit: contain;
   object-position: left center;
 }
@@ -1240,4 +1241,140 @@ strong { font-weight: 600; }
 }
 .burn-cat.is-sol {
   border-color: color-mix(in srgb, var(--gold) 45%, transparent);
+}
+
+
+/* Risk–Reward year timeline */
+.risk-timeline-panel { overflow-x: auto; }
+.risk-timeline h3 {
+  font-family: var(--font-display, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.35rem;
+  margin: 0 0 0.35rem;
+  color: var(--navy, #0B1F33);
+}
+.risk-timeline .timeline-lede {
+  font-size: 0.95rem;
+  color: var(--muted, #5a6b7a);
+  margin: 0 0 1.1rem;
+  max-width: 40rem;
+}
+.risk-timeline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+  margin: 0 0 1.15rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82rem;
+}
+.risk-timeline-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ink, #1a2b3a);
+}
+.risk-timeline-legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.risk-timeline-legend .sw-ice { background: #7a9bb5; }
+.risk-timeline-legend .sw-water { background: var(--turquoise); }
+.risk-timeline-legend .sw-steam { background: var(--gold, #C7A15A); }
+.risk-timeline-legend .sw-overflow { background: #8b6bb5; }
+
+.timeline-currents {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+@media (max-width: 720px) {
+  .timeline-currents { grid-template-columns: 1fr; }
+}
+.timeline-current {
+  border: 1px solid var(--line, #d7e0e6);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  background: #fff;
+}
+.timeline-current h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  color: var(--navy, #0B1F33);
+}
+.timeline-current p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--muted, #5a6b7a);
+}
+.timeline-current.steward { border-top: 3px solid var(--turquoise); }
+.timeline-current.open { border-top: 3px solid var(--gold, #C7A15A); }
+
+.timeline-axis {
+  display: grid;
+  grid-template-columns: 7.5rem repeat(5, 1fr);
+  gap: 0.4rem;
+  align-items: end;
+  margin-bottom: 0.35rem;
+  min-width: 640px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted, #5a6b7a);
+  font-weight: 600;
+}
+.timeline-axis span:first-child { visibility: hidden; }
+
+.timeline-track {
+  display: grid;
+  grid-template-columns: 7.5rem repeat(5, 1fr);
+  gap: 0.4rem;
+  min-width: 640px;
+  margin-bottom: 0.65rem;
+}
+.timeline-track-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy, #0B1F33);
+  display: flex;
+  align-items: center;
+  line-height: 1.25;
+}
+.timeline-cell {
+  border-radius: 10px;
+  padding: 0.55rem 0.5rem 0.5rem;
+  min-height: 4.6rem;
+  background: #f7fafb;
+  border: 1px solid var(--line, #d7e0e6);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.timeline-cell .yr-note {
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: var(--ink, #1a2b3a);
+  flex: 1;
+}
+.timeline-bands {
+  display: flex;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #e6eef2;
+}
+.timeline-bands span { display: block; height: 100%; }
+.timeline-bands .b-ice { background: #7a9bb5; }
+.timeline-bands .b-water { background: var(--turquoise); }
+.timeline-bands .b-steam { background: var(--gold, #C7A15A); }
+.timeline-bands .b-overflow { background: #8b6bb5; }
+
+.timeline-footnote {
+  font-size: 0.82rem;
+  color: var(--muted, #5a6b7a);
+  margin: 0.75rem 0 0;
+  max-width: 44rem;
 }
