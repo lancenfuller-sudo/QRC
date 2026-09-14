@@ -100,6 +100,17 @@ strong { font-weight: 600; }
   height: 36px;
   flex-shrink: 0;
 }
+.brand .logo-header {
+  width: auto;
+  height: 36px;
+  flex-shrink: 0;
+}
+.footer-logo-link { display: inline-block; margin-bottom: 0.75rem; }
+.footer-logo { display: block; width: 140px; height: auto; }
+.qrc-parent { display: inline-block; opacity: 0.85; margin: 0.35rem 0 0.75rem; }
+.qrc-parent:hover { opacity: 1; }
+.qrc-parent img { display: block; height: 28px; width: auto; }
+
 .wordmark {
   font-family: var(--sans);
   font-weight: 500;
