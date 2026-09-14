@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="flowfund.ai">
   <rect width="64" height="64" rx="12" fill="#0B1F33"/>
-  <path fill="#2BA8A0" d="M10 18 C18 18 22 12 30 12 S40 18 46 18 S54 14 58 15 L58 24 C52 22 50 28 46 28 S38 20 30 20 S22 28 18 26 L10 26 Z"/>
-  <path fill="#2BA8A0" opacity="0.85" d="M10 30 C18 30 23 26 30 26 S40 30 46 30 S54 27 58 28 L58 36 C52 34 50 38 46 38 S38 32 30 32 S22 38 18 36 L10 36 Z"/>
-  <path fill="#2BA8A0" opacity="0.65" d="M10 40 C19 40 24 37 31 37 S41 40 47 40 S55 38 58 38 L58 46 C54 46 51 48 47 48 S39 44 31 44 S23 48 18 46 L10 46 Z"/>
+  <path fill="#2BA8A0" opacity="0.4"
+    d="M8 18 C18 18 22 12 30 12 S40 20 46 16 L52 22 C44 28 36 16 30 16 S20 24 8 24 Z"/>
+  <path fill="#2BA8A0" opacity="0.7"
+    d="M8 30 C20 30 24 22 34 22 S46 34 54 28 L58 36 C48 44 40 26 34 26 S22 38 8 38 Z"/>
+  <path fill="#2BA8A0"
+    d="M8 44 C22 44 26 34 38 34 S52 48 58 42 L62 52 C50 60 42 38 38 38 S24 52 8 52 Z"/>
 </svg>
