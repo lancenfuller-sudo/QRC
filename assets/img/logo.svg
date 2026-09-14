@@ -1,13 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" role="img" aria-label="flowfund.ai">
-  <path fill="#0B1F33"
-    d="M48 88
-       C68 88 78 58 98 48
-       C112 40 124 48 130 62
-       C138 42 158 18 190 14
-       C222 10 248 32 262 52
-       C270 64 276 78 284 88
-       L48 88 Z"/>
-  <text x="160" y="128" text-anchor="middle" fill="#0B1F33"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="flowfund.ai">
+  <g fill="none" stroke="#0B1F33" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="1.6"
+      d="M40 58 C70 58 82 34 108 28 C128 22 142 34 148 48 C156 30 178 10 214 8 C248 6 272 28 284 48 C288 56 292 64 296 68"/>
+    <path stroke-width="3.0" opacity="0.9"
+      d="M40 82 C78 82 92 48 126 38 C152 28 170 44 176 58 C188 32 218 8 258 6 C290 4 308 32 316 56 C318 64 320 74 320 78"/>
+  </g>
+  <text x="160" y="122" text-anchor="middle" fill="#0B1F33"
     font-family="'Outfit', 'Helvetica Neue', Helvetica, Arial, sans-serif"
     font-size="28" font-weight="500" letter-spacing="0.04em">flowfund<tspan opacity="0.5" font-weight="400">.ai</tspan></text>
 </svg>
