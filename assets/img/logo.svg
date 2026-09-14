@@ -1,17 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Flow Fund">
-  <path fill="#0B1F33" d="M36 52
-    C58 52 68 28 92 28 S118 52 140 52 S164 28 188 28 S214 52 236 52 S258 34 284 40
-    L284 58 C260 52 248 70 236 70 S212 46 188 46 S164 70 140 70 S116 46 92 46 S68 70 56 64 L36 64 Z"/>
-  <path fill="#0B1F33" d="M36 74
-    C58 74 70 56 92 56 S118 74 140 74 S166 56 188 56 S214 74 236 74 S260 60 284 66
-    L284 84 C260 78 248 92 236 92 S210 74 188 74 S164 92 140 92 S116 74 92 74 S68 92 56 86 L36 86 Z"/>
-  <path fill="#2BA8A0" d="M36 96
-    C60 96 72 82 94 82 S120 96 142 96 S168 82 190 82 S216 96 238 96 S262 86 284 90
-    L284 106 C262 102 250 112 238 112 S214 98 190 98 S166 112 142 112 S118 98 94 98 S70 112 56 108 L36 108 Z"/>
-  <text x="160" y="148" text-anchor="middle" fill="#0B1F33"
-    font-family="Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    font-size="24" font-weight="700" letter-spacing="0.16em">FLOW FUND</text>
-  <text x="160" y="174" text-anchor="middle" fill="#0B1F33"
-    font-family="Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    font-size="12" font-weight="500" letter-spacing="0.62em">.AI</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" role="img" aria-label="flowfund.ai">
+  <path fill="#0B1F33" d="M48 36
+    C70 36 80 18 104 18 S130 36 152 36 S176 18 200 18 S226 36 248 36 S268 24 272 28
+    L272 46 C256 42 246 54 248 54 S224 36 200 36 S176 54 152 54 S128 36 104 36 S80 54 70 50 L48 50 Z"/>
+  <path fill="#0B1F33" opacity="0.75" d="M48 56
+    C72 56 82 42 104 42 S132 56 152 56 S176 42 200 42 S226 56 248 56 S266 46 272 50
+    L272 66 C256 62 246 72 248 72 S222 56 200 56 S176 72 152 72 S128 56 104 56 S80 72 70 68 L48 68 Z"/>
+  <path fill="#0B1F33" opacity="0.5" d="M48 76
+    C74 76 84 64 106 64 S134 76 154 76 S178 64 202 64 S228 76 248 76 S266 70 272 72
+    L272 86 C258 84 250 90 248 90 S222 78 202 78 S178 90 154 90 S130 78 106 78 S82 90 70 88 L48 88 Z"/>
+  <text x="160" y="128" text-anchor="middle" fill="#0B1F33"
+    font-family="'Outfit', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="28" font-weight="500" letter-spacing="0.04em">flowfund<tspan opacity="0.5" font-weight="400">.ai</tspan></text>
 </svg>
