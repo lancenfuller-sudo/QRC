@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Flow Fund">
   <rect width="64" height="64" rx="10" fill="#0B1F33"/>
-  <path fill="#F4F7F8" d="M8 44
-    L16 28 L24 38 L32 16 L42 36 L50 26 L56 44 Z"/>
-  <path fill="none" stroke="#2BA8A0" stroke-width="1.5" opacity="0.9"
-    d="M10 50 C22 44 30 52 40 46 S52 44 56 50"/>
+  <path fill="#F4F7F8" d="M10 20 C18 20 22 12 30 12 S40 20 46 20 S54 14 58 16 L58 26 C52 24 50 30 46 30 S38 22 30 22 S22 30 18 28 L10 28 Z"/>
+  <path fill="#F4F7F8" d="M10 32 C18 32 23 26 30 26 S40 32 46 32 S54 28 58 30 L58 38 C52 36 50 40 46 40 S38 34 30 34 S22 40 18 38 L10 38 Z"/>
+  <path fill="#2BA8A0" d="M10 42 C19 42 24 38 31 38 S41 42 47 42 S55 40 58 40 L58 48 C54 48 51 50 47 50 S39 46 31 46 S23 50 18 48 L10 48 Z"/>
 </svg>

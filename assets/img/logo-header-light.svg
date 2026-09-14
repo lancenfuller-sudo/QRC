@@ -1,11 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" role="img" aria-label="Flow Fund">
-  <path fill="#F4F7F8" d="M4 38 L12 18 L18 28 L26 8 L36 30 L44 18 L52 38 Z"/>
-  <path fill="none" stroke="#2BA8A0" stroke-width="1.2" opacity="0.9"
-    d="M6 42 C16 38 24 44 34 40 S46 38 52 42"/>
-  <text x="64" y="24" fill="#F4F7F8"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" role="img" aria-label="Flow Fund">
+  <g transform="translate(0,6)">
+    <path fill="#F4F7F8" d="M4 8 C12 8 15 2 22 2 S30 8 36 8 S43 2 50 2 L50 14 C44 14 40 18 36 18 S28 12 22 12 S14 18 10 16 L4 16 Z"/>
+    <path fill="#F4F7F8" d="M4 18 C12 18 16 14 22 14 S30 18 36 18 S44 14 50 14 L50 24 C44 24 40 26 36 26 S28 22 22 22 S14 26 10 24 L4 24 Z"/>
+    <path fill="#2BA8A0" d="M4 26 C13 26 17 23 23 23 S31 26 37 26 S45 24 50 24 L50 32 C45 32 41 34 37 34 S29 30 23 30 S15 34 10 32 L4 32 Z"/>
+  </g>
+  <text x="62" y="22" fill="#F4F7F8"
     font-family="Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"
     font-size="15" font-weight="700" letter-spacing="0.14em">FLOW FUND</text>
-  <text x="64" y="40" fill="#F4F7F8"
+  <text x="62" y="38" fill="#F4F7F8"
     font-family="Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    font-size="9" font-weight="500" letter-spacing="0.45em">.AI</text>
+    font-size="9" font-weight="500" letter-spacing="0.5em">.AI</text>
 </svg>
