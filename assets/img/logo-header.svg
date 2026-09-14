@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40" role="img" aria-label="flowfund.ai">
   <g transform="translate(0,4)">
-    <path fill="#2BA8A0" d="M2 4 C10 4 13 0 20 0 S28 4 34 4 S41 0 46 0 L46 10 C41 10 38 13 34 13 S26 8 20 8 S12 13 9 11 L2 11 Z"/>
-    <path fill="#2BA8A0" opacity="0.85" d="M2 13 C10 13 14 10 20 10 S28 13 34 13 S42 10 46 10 L46 18 C41 18 38 20 34 20 S26 16 20 16 S12 20 9 18 L2 18 Z"/>
-    <path fill="#2BA8A0" opacity="0.65" d="M2 20 C11 20 15 18 21 18 S29 20 35 20 S43 18 46 18 L46 25 C42 25 39 26 35 26 S27 23 21 23 S13 26 9 25 L2 25 Z"/>
+    <path fill="#2BA8A0" d="M2 4 C10 4 14 2.5 20 2.5 S28 4 34 4 S41 0 46 0 L46 10 C41 10 38 13 34 13 S26 9.5 20 9.5 S12 13 9 11 L2 11 Z"/>
+    <path fill="#2BA8A0" opacity="0.85" d="M2 13 C10 13 14 12 20 12 S28 13 34 13 S42 10 46 10 L46 18 C41 18 38 20 34 20 S26 17 20 17 S12 20 9 18 L2 18 Z"/>
+    <path fill="#2BA8A0" opacity="0.65" d="M2 20 C11 20 15 19.5 21 19.5 S29 20 35 20 S43 18 46 18 L46 25 C42 25 39 26 35 26 S27 24 21 24 S13 26 9 25 L2 25 Z"/>
   </g>
   <text x="56" y="26" fill="#F4F7F8"
     font-family="'Outfit', 'Helvetica Neue', Helvetica, Arial, sans-serif"
