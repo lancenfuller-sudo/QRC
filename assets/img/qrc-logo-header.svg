@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 48" role="img" aria-label="Quantum Ridge Capital">
+  <path fill="#F4F7F8" d="M4 38 L14 14 L20 26 L28 8 L38 28 L46 16 L56 38 Z"/>
+  <text x="68" y="22" fill="#F4F7F8"
+    font-family="Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="12" font-weight="700" letter-spacing="0.12em">QUANTUM RIDGE</text>
+  <text x="68" y="38" fill="#F4F7F8"
+    font-family="Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="8" font-weight="500" letter-spacing="0.42em">CAPITAL</text>
+</svg>

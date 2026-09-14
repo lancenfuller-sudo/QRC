@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" role="img" aria-label="Flow Fund">
+  <path fill="#0B1F33" d="M4 38 L12 18 L18 28 L26 8 L36 30 L44 18 L52 38 Z"/>
+  <path fill="none" stroke="#2BA8A0" stroke-width="1.2" opacity="0.85"
+    d="M6 42 C16 38 24 44 34 40 S46 38 52 42"/>
+  <text x="64" y="24" fill="#0B1F33"
+    font-family="Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="15" font-weight="700" letter-spacing="0.14em">FLOW FUND</text>
+  <text x="64" y="40" fill="#0B1F33"
+    font-family="Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="9" font-weight="500" letter-spacing="0.45em">.AI</text>
+</svg>
