@@ -65,7 +65,7 @@ Forms:
 - **Not** an offer of securities  
 - **No** guaranteed returns or performance claims  
 - QRC Florida RIA = **planned path / in formation** — **not currently registered**  
-- **No** live login, trading, custody, or fake portfolio calculators  
+- **No** live login, trading, or custody; tools are **illustrative examples** only (not your account, not advice)  
 - “Be water” = adaptability metaphor only — **not affiliated with Bruce Lee Estate**  
 - Custodians / Microsoft 365 / Grok / Claude = descriptive only; AI research always human-reviewed; **no automated trading**  
 - See `/disclosures/` for the full public list  
@@ -86,7 +86,10 @@ Use only **Flow Fund** / `flowfund.ai`. Do not reuse any prior working titles, c
 | `/steward/` | Steward Current |
 | `/open/` | Open Current |
 | `/qrc/` | Quantum Ridge Capital |
-| `/tools/` | Flow Tools |
+| `/tools/` | Flow Tools hub |
+| `/tools/level-set/` | Level-Set illustration |
+| `/tools/burn-down/` | Burn-Down illustration |
+| `/tools/risk-reward/` | Risk–Reward illustration |
 | `/insights/` | Insights index |
 | `/insights/be-water-with-your-money/` | Essay |
 | `/insights/the-vessel-is-not-a-pile/` | Essay |
@@ -96,9 +99,20 @@ Use only **Flow Fund** / `flowfund.ai`. Do not reuse any prior working titles, c
 
 ## Assets
 
-- `assets/css/site.css` — shared styles  
+- `assets/css/site.css` — shared styles (+ Flow Tools UI)  
 - `assets/js/site.js` — nav + forms  
+- `assets/js/tools.js` — Level-Set / Burn-Down / Risk–Reward illustrative logic (vanilla JS)  
 - `assets/img/logo.svg` — circular reservoir + single current  
 - `assets/img/logo-mark.svg` — compact mark  
+
+### Flow Tools
+
+Educational illustrations only (banner on each tool page). Toggle **Middle class** (Rivera household — Orlando metro) vs **Family office** (Harbor Family Office). No login, custody, trading, or return promises.
+
+| Tool | Path | Behavior |
+|------|------|----------|
+| Level-Set | `/tools/level-set/` | IS / BS / CF tables; light edits; reset to example |
+| Burn-Down | `/tools/burn-down/` | Drag categories + surplus reservoir meter |
+| Risk–Reward | `/tools/risk-reward/` | Allocation map with Ice/Water/Steam qualitative bands |
 
 Primary CTA: **Start a Flow Conversation** · Secondary: **See the Flow Framework**
