@@ -1,11 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40" role="img" aria-label="flowfund.ai">
-  <path fill="#0B1F33" opacity="0.35"
-    d="M4 11 C12 11 16 5 24 5 S34 13 42 11 L48 14 C38 18 30 8 24 8 S14 14 4 14 Z"/>
-  <path fill="#0B1F33" opacity="0.55"
-    d="M4 19 C14 19 18 11 28 11 S40 21 50 17 L56 22 C44 28 34 14 28 14 S16 22 4 22 Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 44" role="img" aria-label="flowfund.ai">
   <path fill="#0B1F33"
-    d="M4 27 C16 27 20 17 32 17 S46 29 56 23 L60 30 C48 38 36 20 32 20 S18 30 4 30 Z"/>
-  <text x="68" y="26" fill="#0B1F33"
+    d="M4 28
+       C10 28 14 18 22 14
+       C28 11 32 14 34 20
+       C36 14 42 6 52 4
+       C62 2 70 10 74 18
+       C76 22 78 28 84 28
+       L4 28 Z"/>
+  <text x="96" y="30" fill="#0B1F33"
     font-family="'Outfit', 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    font-size="16" font-weight="500" letter-spacing="0.03em">flowfund<tspan opacity="0.5" font-weight="400">.ai</tspan></text>
+    font-size="17" font-weight="500" letter-spacing="0.03em">flowfund<tspan opacity="0.5" font-weight="400">.ai</tspan></text>
 </svg>
