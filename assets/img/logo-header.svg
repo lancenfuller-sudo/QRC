@@ -1,8 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 40" role="img" aria-label="Flow Fund">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 40" role="img" aria-label="flowfund.ai">
   <rect x="0" y="4" width="32" height="32" rx="8" fill="#0B1F33"/>
-  <path fill="none" stroke="#2BA8A0" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"
-    d="M5.5 26 C9.5 26 11 17.5 16 17.5 S22.5 26 26.5 26"/>
+  <path fill="none" stroke="#2BA8A0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"
+    d="M6 18.5 C10 18.5 11 13.5 16 13.5 S22 18.5 26 18.5"/>
+  <path fill="none" stroke="#2BA8A0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.72"
+    d="M6 25.5 C10 25.5 11 20.5 16 20.5 S22 25.5 26 25.5"/>
   <text x="42" y="26.5" fill="#F4F7F8"
     font-family="Outfit, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    font-size="17" font-weight="500" letter-spacing="0.02em">flowfund</text>
+    font-size="17" font-weight="500" letter-spacing="0.02em">flo<tspan fill="#2BA8A0">w</tspan>fund<tspan fill="#2BA8A0" font-weight="400" font-size="14">.ai</tspan></text>
 </svg>
