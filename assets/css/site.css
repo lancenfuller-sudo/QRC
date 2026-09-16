@@ -556,77 +556,122 @@ strong { font-weight: 600; }
 .page-hero h1 { color: var(--foam); max-width: 18ch; }
 .page-hero .lede { color: rgba(244, 247, 248, 0.78); }
 
-/* Page hero with painterly scene art (stacked: text then full-bleed figure) */
-.page-hero.has-art {
+/* Immersive heroes: art as full-bleed background, text on navy scrim */
+.page-hero.has-art,
+.hero.has-art {
   position: relative;
-  padding-bottom: 0;
   overflow: hidden;
+  isolation: isolate;
+  min-height: clamp(22rem, 52vh, 34rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(3.25rem, 9vw, 5.75rem) 0 clamp(3.5rem, 8vw, 5.25rem);
+  background: var(--navy-deep, #071522);
 }
-.page-hero.has-art > .wrap {
+.page-hero.has-art > .wrap,
+.hero.has-art > .wrap {
   position: relative;
-  z-index: 1;
-  padding-bottom: clamp(1.25rem, 3vw, 1.75rem);
+  z-index: 2;
+  padding-bottom: 0;
 }
-.page-hero .hero-art {
+.page-hero.has-art .hero-art,
+.hero.has-art .hero-art {
+  position: absolute;
+  inset: 0;
   margin: 0;
   width: 100%;
-  max-height: 320px;
+  height: 100%;
+  max-height: none;
   overflow: hidden;
   line-height: 0;
+  z-index: 0;
   background: #0a1a2a;
+  opacity: 1;
 }
-.page-hero .hero-art img {
+.page-hero.has-art .hero-art img,
+.hero.has-art .hero-art img {
   display: block;
   width: 100%;
   height: 100%;
-  max-height: 320px;
+  max-height: none;
   object-fit: cover;
-  object-position: center;
+  object-position: center 58%;
 }
-@media (max-width: 720px) {
-  .page-hero .hero-art,
-  .page-hero .hero-art img {
-    max-height: 180px;
-  }
+/* Navy → transparent scrim for readable overlay text */
+.page-hero.has-art::before,
+.hero.has-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 21, 34, 0.88) 0%,
+      rgba(11, 31, 51, 0.62) 26%,
+      rgba(11, 31, 51, 0.28) 52%,
+      rgba(11, 31, 51, 0.12) 72%,
+      rgba(11, 31, 51, 0.48) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(7, 21, 34, 0.28) 0%,
+      transparent 42%,
+      transparent 100%
+    );
+}
+/* Soft fade mask at top of art into navy (extra top density) */
+.page-hero.has-art::after,
+.hero.has-art::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: clamp(4.5rem, 14vh, 7rem);
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 21, 34, 0.88) 0%,
+    rgba(7, 21, 34, 0.35) 55%,
+    transparent 100%
+  );
 }
 @media (min-width: 1100px) {
-  .page-hero .hero-art,
-  .page-hero .hero-art img {
-    max-height: 340px;
+  .page-hero.has-art,
+  .hero.has-art {
+    min-height: clamp(26rem, 56vh, 38rem);
+    padding-top: clamp(4rem, 10vw, 6.5rem);
+    padding-bottom: clamp(4rem, 9vw, 6rem);
+  }
+}
+@media (max-width: 720px) {
+  .page-hero.has-art,
+  .hero.has-art {
+    min-height: clamp(20rem, 68vh, 28rem);
+    padding: clamp(2.75rem, 10vw, 3.5rem) 0 clamp(2.75rem, 8vw, 3.5rem);
+  }
+  .page-hero.has-art h1,
+  .hero.has-art h1 {
+    max-width: 14ch;
+  }
+  .page-hero.has-art .lede,
+  .hero.has-art .lede {
+    font-size: 1.05rem;
   }
 }
 
-/* Home hero art band (subtle, under lede/CTAs) */
-.hero.has-art {
-  padding-bottom: 0;
-}
-.hero.has-art > .wrap {
-  position: relative;
+/* Home: fade decorative SVG rings when art carries the moment */
+.hero.has-art .hero-visual {
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
   z-index: 1;
-  padding-bottom: clamp(1.5rem, 4vw, 2.25rem);
 }
-.hero .hero-art {
-  margin: 0;
-  width: 100%;
-  max-height: 240px;
-  overflow: hidden;
-  line-height: 0;
-  background: #0a1a2a;
-  opacity: 0.92;
-}
-.hero .hero-art img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-height: 240px;
-  object-fit: cover;
-  object-position: center 40%;
-}
-@media (max-width: 720px) {
-  .hero .hero-art,
-  .hero .hero-art img {
-    max-height: 140px;
-  }
+@media (max-width: 760px) {
+  .hero.has-art .hero-visual { display: none; }
 }
 
 /* Insight / scene card thumbnails */
@@ -649,6 +694,11 @@ strong { font-weight: 600; }
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.35s ease;
+}
+.insight-card:hover .card-media img,
+.scene-card:hover .card-media img {
+  transform: scale(1.03);
 }
 .insight-card .card-body,
 .scene-card .card-body {
@@ -1491,13 +1541,13 @@ strong { font-weight: 600; }
   padding: 0;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(11, 31, 51, 0.04);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 .craft-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(11, 31, 51, 0.10);
 }
 .craft-card__media {
   aspect-ratio: 4 / 3;
@@ -1509,6 +1559,10 @@ strong { font-weight: 600; }
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
+}
+.craft-card:hover .craft-card__media img {
+  transform: scale(1.04);
 }
 .craft-card__body {
   padding: 1.25rem 1.35rem 1.45rem;
@@ -1522,6 +1576,51 @@ strong { font-weight: 600; }
   font-size: 0.95rem;
   line-height: 1.55;
 }
+
+/* Path cards with optional scene media */
+.path-card.has-media {
+  padding: 0;
+  min-height: 280px;
+  justify-content: flex-end;
+}
+.path-card.has-media .path-media {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  z-index: 0;
+}
+.path-card.has-media .path-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.path-card.has-media .path-body {
+  position: relative;
+  z-index: 1;
+  padding: 2rem 1.75rem;
+}
+.path-card.steward.has-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(165deg, rgba(11, 31, 51, 0.55) 0%, rgba(11, 31, 51, 0.88) 55%, rgba(11, 31, 51, 0.94) 100%);
+  pointer-events: none;
+}
+.path-card.open.has-media {
+  border: 1px solid var(--line);
+}
+.path-card.open.has-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(165deg, rgba(244, 247, 248, 0.35) 0%, rgba(244, 247, 248, 0.88) 48%, rgba(255, 255, 255, 0.96) 100%);
+  pointer-events: none;
+}
+.path-card.has-media > .path-body { z-index: 2; }
+.path-card.has-media .btn { position: relative; z-index: 2; }
 
 /* ---------- Lifetime compounding chart ---------- */
 .lifetime-panel { overflow-x: auto; }
