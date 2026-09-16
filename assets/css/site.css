@@ -556,6 +556,109 @@ strong { font-weight: 600; }
 .page-hero h1 { color: var(--foam); max-width: 18ch; }
 .page-hero .lede { color: rgba(244, 247, 248, 0.78); }
 
+/* Page hero with painterly scene art (stacked: text then full-bleed figure) */
+.page-hero.has-art {
+  position: relative;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+.page-hero.has-art > .wrap {
+  position: relative;
+  z-index: 1;
+  padding-bottom: clamp(1.25rem, 3vw, 1.75rem);
+}
+.page-hero .hero-art {
+  margin: 0;
+  width: 100%;
+  max-height: 320px;
+  overflow: hidden;
+  line-height: 0;
+  background: #0a1a2a;
+}
+.page-hero .hero-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  object-position: center;
+}
+@media (max-width: 720px) {
+  .page-hero .hero-art,
+  .page-hero .hero-art img {
+    max-height: 180px;
+  }
+}
+@media (min-width: 1100px) {
+  .page-hero .hero-art,
+  .page-hero .hero-art img {
+    max-height: 340px;
+  }
+}
+
+/* Home hero art band (subtle, under lede/CTAs) */
+.hero.has-art {
+  padding-bottom: 0;
+}
+.hero.has-art > .wrap {
+  position: relative;
+  z-index: 1;
+  padding-bottom: clamp(1.5rem, 4vw, 2.25rem);
+}
+.hero .hero-art {
+  margin: 0;
+  width: 100%;
+  max-height: 240px;
+  overflow: hidden;
+  line-height: 0;
+  background: #0a1a2a;
+  opacity: 0.92;
+}
+.hero .hero-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  object-position: center 40%;
+}
+@media (max-width: 720px) {
+  .hero .hero-art,
+  .hero .hero-art img {
+    max-height: 140px;
+  }
+}
+
+/* Insight / scene card thumbnails */
+.insight-card,
+.scene-card {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.insight-card .card-media,
+.scene-card .card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--foam-soft);
+}
+.insight-card .card-media img,
+.scene-card .card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.insight-card .card-body,
+.scene-card .card-body {
+  padding: 1.25rem 1.35rem 1.45rem;
+}
+.insight-card .card-num,
+.scene-card .card-num {
+  margin-bottom: 0.35rem;
+}
+
 /* Prose */
 .prose { max-width: 680px; }
 .prose h2 { margin-top: 2.25rem; }
