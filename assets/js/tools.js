@@ -194,6 +194,87 @@
     }
   };
 
+
+  /* ---------- Lifetime compounding (illustrative teaching curves) ---------- */
+  var LIFETIME_PATHS = {
+    rivera: {
+      id: "rivera",
+      profileId: "mc",
+      label: "Rivera path",
+      lean: "Steward lean",
+      blurb:
+        "Middle-class household example: mid-career surplus into retirement vessels, then a calm sustain band, then handoff to trust.",
+      startAge: 35,
+      endAge: 105,
+      startIndex: 100,
+      growth: 0.05,
+      handoffAge: 88,
+      lifestyleNeed: 28,
+      lifestyleLabel: "Illustrative household lifestyle need",
+      stages: [
+        { id: "build", label: "Build", range: "≈30–45", from: 35, to: 45 },
+        { id: "compound", label: "Compound", range: "≈45–60", from: 45, to: 60 },
+        { id: "sustain", label: "Sustain / 4% teaching band", range: "≈60–75", from: 60, to: 75 },
+        { id: "longevity", label: "Longevity → first generation", range: "≈75–88", from: 75, to: 88 },
+        { id: "handoff", label: "Handoff to trust", range: "≈88", from: 88, to: 92 },
+        { id: "generational", label: "Generational wealth", range: "next vessels", from: 92, to: 105 }
+      ],
+      contrib: function (age) {
+        if (age >= 35 && age < 45) return 6;
+        if (age >= 45 && age < 60) return 10;
+        if (age >= 60 && age < 67) return 2;
+        return 0;
+      }
+    },
+    harbor: {
+      id: "harbor",
+      profileId: "fo",
+      label: "Harbor path",
+      lean: "Open lean",
+      blurb:
+        "Family-office style example: earlier overflow capacity and earlier trust planning, with the same teaching 4% heuristic.",
+      startAge: 35,
+      endAge: 105,
+      startIndex: 220,
+      growth: 0.055,
+      handoffAge: 76,
+      lifestyleNeed: 55,
+      lifestyleLabel: "Illustrative family lifestyle need",
+      stages: [
+        { id: "build", label: "Build", range: "≈30–45", from: 35, to: 45 },
+        { id: "compound", label: "Compound", range: "≈45–55", from: 45, to: 55 },
+        { id: "sustain", label: "Sustain / 4% teaching band", range: "≈55–70", from: 55, to: 70 },
+        { id: "longevity", label: "Longevity → first generation", range: "≈70–76", from: 70, to: 76 },
+        { id: "handoff", label: "Handoff to trust", range: "≈76", from: 76, to: 82 },
+        { id: "generational", label: "Generational wealth", range: "next vessels", from: 82, to: 105 }
+      ],
+      contrib: function (age) {
+        if (age >= 35 && age < 45) return 20;
+        if (age >= 45 && age < 55) return 25;
+        if (age >= 55 && age < 62) return 10;
+        return 0;
+      }
+    }
+  };
+
+  function buildLifetimePoints(path) {
+    var pts = [];
+    var v = path.startIndex;
+    var age;
+    for (age = path.startAge; age <= path.endAge; age++) {
+      pts.push({
+        age: age,
+        vessel: v,
+        spendCap: v * 0.04,
+        afterHandoff: age >= path.handoffAge
+      });
+      var g = age < path.handoffAge ? path.growth : path.growth * 0.95;
+      var c = age < path.handoffAge ? path.contrib(age) : 0;
+      v = v * (1 + g) + c;
+    }
+    return pts;
+  }
+
   function money(n, opts) {
     opts = opts || {};
     var abs = Math.abs(Number(n) || 0);
@@ -535,6 +616,8 @@
       });
     }
 
+
+
     var initial = bindProfileSwitcher(load);
     load(initial);
   }
@@ -738,6 +821,7 @@
       }
 
       renderTimeline(p);
+      renderLifetimeChart(p);
     }
 
     function bandBar(bands) {
@@ -802,6 +886,182 @@
         "</strong>. Compare both rows to see how the same year marks can look different by vessel size and current. Percent bars are emphasis weights — not portfolio weights or forecast returns.</p>";
       html += "</div>";
       el.innerHTML = html;
+    }
+
+
+    function renderLifetimeChart(p) {
+      var el = qs("[data-lifetime-chart]");
+      if (!el) return;
+      var pathId = p.id === "fo" ? "harbor" : "rivera";
+      var path = LIFETIME_PATHS[pathId];
+      var otherId = pathId === "rivera" ? "harbor" : "rivera";
+      var other = LIFETIME_PATHS[otherId];
+      var pts = buildLifetimePoints(path);
+      var W = 720;
+      var H = 420;
+      var pad = { t: 40, r: 58, b: 78, l: 54 };
+      var plotW = W - pad.l - pad.r;
+      var plotH = H - pad.t - pad.b;
+      var maxVessel = 0;
+      var maxSpend = path.lifestyleNeed;
+      pts.forEach(function (pt) {
+        if (pt.vessel > maxVessel) maxVessel = pt.vessel;
+        if (pt.spendCap > maxSpend) maxSpend = pt.spendCap;
+      });
+      maxVessel *= 1.08;
+      maxSpend *= 1.15;
+      var x0 = path.startAge;
+      var x1 = path.endAge;
+      function xScale(age) {
+        return pad.l + ((age - x0) / (x1 - x0)) * plotW;
+      }
+      function yVessel(v) {
+        return pad.t + plotH - (v / maxVessel) * plotH;
+      }
+      function ySpend(s) {
+        return pad.t + plotH - (s / maxSpend) * plotH;
+      }
+      function seriesPath(filterFn, yFn) {
+        var d = "";
+        var n = 0;
+        pts.forEach(function (pt) {
+          if (!filterFn(pt)) return;
+          var x = xScale(pt.age);
+          var y = yFn(pt);
+          d += (n === 0 ? "M" : " L") + x.toFixed(1) + " " + y.toFixed(1);
+          n += 1;
+        });
+        return d;
+      }
+      var vesselSolid = seriesPath(function (pt) { return pt.age <= path.handoffAge; }, function (pt) { return yVessel(pt.vessel); });
+      var vesselTrust = seriesPath(function (pt) { return pt.age >= path.handoffAge; }, function (pt) { return yVessel(pt.vessel); });
+      var spendSolid = seriesPath(function (pt) { return pt.age <= path.handoffAge; }, function (pt) { return ySpend(pt.spendCap); });
+      var spendTrust = seriesPath(function (pt) { return pt.age >= path.handoffAge; }, function (pt) { return ySpend(pt.spendCap); });
+      var needY = ySpend(path.lifestyleNeed);
+      var handoffX = xScale(path.handoffAge);
+      var crossAge = null;
+      pts.forEach(function (pt) {
+        if (crossAge === null && pt.spendCap >= path.lifestyleNeed) crossAge = pt.age;
+      });
+
+      var grid = "";
+      var i;
+      for (i = 0; i <= 4; i++) {
+        var vv = (maxVessel * i) / 4;
+        var yy = yVessel(vv);
+        grid +=
+          '<line x1="' + pad.l + '" y1="' + yy.toFixed(1) + '" x2="' + (pad.l + plotW) + '" y2="' + yy.toFixed(1) + '" stroke="rgba(11,31,51,0.06)" stroke-width="1"/>';
+        grid +=
+          '<text x="' + (pad.l - 8) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end" class="lt-axis">' + Math.round(vv) + "</text>";
+        var ss = (maxSpend * i) / 4;
+        var ys = ySpend(ss);
+        grid +=
+          '<text x="' + (pad.l + plotW + 8) + '" y="' + (ys + 3).toFixed(1) + '" text-anchor="start" class="lt-axis lt-axis-r">' + Math.round(ss) + "</text>";
+      }
+
+      var stageMarks = "";
+      path.stages.forEach(function (st, idx) {
+        var sx = xScale(st.from);
+        stageMarks +=
+          '<line x1="' + sx.toFixed(1) + '" y1="' + pad.t + '" x2="' + sx.toFixed(1) + '" y2="' + (pad.t + plotH) + '" stroke="rgba(11,31,51,0.08)" stroke-width="1"/>';
+        var mid = xScale((st.from + Math.min(st.to, x1)) / 2);
+        var ly = pad.t + plotH + 18 + (idx % 2) * 14;
+        stageMarks +=
+          '<text x="' + mid.toFixed(1) + '" y="' + ly + '" text-anchor="middle" class="lt-stage-label">' + escapeHtml(st.label) + "</text>";
+      });
+
+      var crossMark = "";
+      if (crossAge !== null) {
+        var cx = xScale(crossAge);
+        var cy = ySpend(path.lifestyleNeed);
+        crossMark =
+          '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="4.5" fill="#C7A15A" stroke="#0B1F33" stroke-width="1.2"/>' +
+          '<text x="' + (cx + 8).toFixed(1) + '" y="' + (cy - 10).toFixed(1) + '" class="lt-anno">Meet &amp; exceed · age ~' + crossAge + "</text>";
+      }
+
+      var handoffAnno =
+        '<line x1="' + handoffX.toFixed(1) + '" y1="' + pad.t + '" x2="' + handoffX.toFixed(1) + '" y2="' + (pad.t + plotH) + '" stroke="#C7A15A" stroke-width="1.5" stroke-dasharray="4 4"/>' +
+        '<path d="M' + handoffX.toFixed(1) + " " + (pad.t + 16) + " L" + (handoffX + 38).toFixed(1) + " " + (pad.t + 16) +
+        " M" + (handoffX + 32).toFixed(1) + " " + (pad.t + 10) + " L" + (handoffX + 38).toFixed(1) + " " + (pad.t + 16) +
+        " L" + (handoffX + 32).toFixed(1) + " " + (pad.t + 22) + '" fill="none" stroke="#C7A15A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<text x="' + (handoffX + 42).toFixed(1) + '" y="' + (pad.t + 20) + '" class="lt-anno lt-anno-gold">Trust handoff → generational</text>';
+
+      var growthNote = path.id === "harbor" ? "5.5" : "5";
+
+      var svg =
+        '<svg class="lifetime-svg" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Illustrative lifetime vessel compounding for ' + escapeHtml(path.label) + '">' +
+        "<title>Illustrative lifetime vessel path — not a forecast</title>" +
+        grid +
+        stageMarks +
+        '<line x1="' + pad.l + '" y1="' + needY.toFixed(1) + '" x2="' + (pad.l + plotW) + '" y2="' + needY.toFixed(1) + '" stroke="#5A6B76" stroke-width="1.4" stroke-dasharray="2 5"/>' +
+        '<text x="' + (pad.l + 6) + '" y="' + (needY - 6).toFixed(1) + '" class="lt-anno">Lifestyle need (illustrative)</text>' +
+        '<path d="' + spendSolid + '" fill="none" stroke="#C7A15A" stroke-width="1.8" stroke-dasharray="6 5"/>' +
+        '<path d="' + spendTrust + '" fill="none" stroke="#C7A15A" stroke-width="1.5" stroke-dasharray="2 4" opacity="0.75"/>' +
+        '<path d="' + vesselSolid + '" fill="none" stroke="#2BA8A0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<path d="' + vesselTrust + '" fill="none" stroke="#0B1F33" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"/>' +
+        handoffAnno +
+        crossMark +
+        '<text x="' + pad.l + '" y="' + (pad.t - 16) + '" class="lt-axis-title">Vessel index (illustrative)</text>' +
+        '<text x="' + (pad.l + plotW) + '" y="' + (pad.t - 16) + '" text-anchor="end" class="lt-axis-title">Spending capacity · 4% teaching line</text>' +
+        "</svg>";
+
+      var html = "";
+      html += '<div class="lifetime-chart">';
+      html += "<h3>Lifetime compounding — vessel, 4% teaching line, handoff</h3>";
+      html +=
+        '<p class="lifetime-lede">How an illustrative household vessel can compound across life stages, relate to a classic <strong>4% rule</strong> teaching line, then hand off to trust / generational wealth. Calm math for teaching — not a forecast.</p>';
+      html +=
+        '<div class="lifetime-path-switch" role="group" aria-label="Lifetime path example">' +
+        '<button type="button" data-lifetime-path="rivera"' +
+        (pathId === "rivera" ? ' class="is-active" aria-pressed="true"' : ' aria-pressed="false"') +
+        ">Rivera · Steward lean</button>" +
+        '<button type="button" data-lifetime-path="harbor"' +
+        (pathId === "harbor" ? ' class="is-active" aria-pressed="true"' : ' aria-pressed="false"') +
+        ">Harbor · Open lean</button>" +
+        "</div>";
+      html +=
+        '<p class="lifetime-path-meta"><strong>' +
+        escapeHtml(path.label) +
+        "</strong> · " +
+        escapeHtml(path.lean) +
+        " — " +
+        escapeHtml(path.blurb) +
+        "</p>";
+      html += '<div class="lifetime-svg-wrap">' + svg + "</div>";
+      html +=
+        '<ul class="lifetime-legend" aria-label="Chart legend">' +
+        '<li><i class="lg-vessel"></i> Vessel / portfolio (illustrative index)</li>' +
+        '<li><i class="lg-vessel-trust"></i> Trust sleeve continuation (after handoff)</li>' +
+        '<li><i class="lg-four"></i> 4% rule teaching line (spending capacity)</li>' +
+        '<li><i class="lg-need"></i> Flat lifestyle need (illustrative)</li>' +
+        "</ul>";
+      html += '<ol class="lifetime-stages">';
+      path.stages.forEach(function (st) {
+        html +=
+          "<li><strong>" +
+          escapeHtml(st.label) +
+          "</strong> <span>" +
+          escapeHtml(st.range) +
+          "</span></li>";
+      });
+      html += "</ol>";
+      html +=
+        '<p class="lifetime-footnote"><strong>Disclaimer:</strong> Illustrative hypothetical only — not a forecast, not advice, not a guarantee. The “4% rule” is a historical teaching heuristic, not a promise. Growth shown is an illustrative ' +
+        growthNote +
+        "% real teaching curve with invented surplus additions — not an expected return. Index starts at 100 (Rivera) or 220 (Harbor) at age 35. Spending capacity = 4% of that year’s vessel index. Compare the " +
+        escapeHtml(other.label) +
+        " via the toggle.</p>";
+      html += "</div>";
+      el.innerHTML = html;
+
+      qsa("[data-lifetime-path]", el).forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var id = btn.getAttribute("data-lifetime-path");
+          var mapped = id === "harbor" ? "fo" : "mc";
+          var switcherBtn = qs('[data-profile-switcher] [data-profile="' + mapped + '"]');
+          if (switcherBtn) switcherBtn.click();
+        });
+      });
     }
 
     var initial = bindProfileSwitcher(load);
