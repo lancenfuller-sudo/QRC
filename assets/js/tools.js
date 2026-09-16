@@ -66,7 +66,12 @@
           { id: "sol_above_earn", label: "Standard of living above value earned", amount: 650, cutDefault: 325, note: "Lifestyle spend that outruns earned capacity — educational drag, not judgment." }
         ],
         takeHome: 9200,
-        surplusHint: "Roughly $800–1,400/mo may open after intentional burn-down, including closing the gap where standard of living sits above value earned."
+        surplusHint: "Roughly $800–1,400/mo may open after intentional burn-down, including closing the gap where standard of living sits above value earned.",
+        readiness: {
+          curveFundingMonthly: 2500,
+          sustainThrough: 75,
+          tie: "Closing dining, memberships, impulse spend, and lifestyle-above-earn drag feeds the Water sleeve instead of letting it leak away."
+        }
       },
       allocation: [
         { id: "cash", label: "Cash / reserves", pct: 8, band: "ice", role: "Preserve — liquidity for shocks" },
@@ -164,7 +169,12 @@
         takeHome: 120000,
         surplusHint: "Educational: reclaiming drag — including standard of living above value earned — can fund DAF overflow or reserves. Not a performance claim.",
         annualSpend: 1200000,
-        philanthropyTarget: 800000
+        philanthropyTarget: 800000,
+        readiness: {
+          curveFundingMonthly: 2800,
+          sustainThrough: 70,
+          tie: "Closing overlapping entities, duplicate services, layered fees, and lifestyle-above-earn drag feeds Water and trust sleeves before earlier overflow."
+        }
       },
       allocation: [
         { id: "cash", label: "Cash / reserves / LLC cash", pct: 8, band: "ice", role: "Preserve — liquidity & ops" },
@@ -979,12 +989,18 @@
           '<text x="' + (cx + 8).toFixed(1) + '" y="' + (cy - 10).toFixed(1) + '" class="lt-anno">Meet &amp; exceed · age ~' + crossAge + "</text>";
       }
 
+      var vesselLabelPt = pts.filter(function (pt) { return pt.age === (path.id === "harbor" ? 46 : 49); })[0];
+      var spendLabelPt = pts.filter(function (pt) { return pt.age === (path.id === "harbor" ? 66 : 70); })[0];
+      var seriesLabels =
+        '<text x="' + (xScale(vesselLabelPt.age) + 8).toFixed(1) + '" y="' + (yVessel(vesselLabelPt.vessel) - 11).toFixed(1) + '" class="lt-anno lt-anno-vessel">Vessel compounds</text>' +
+        '<text x="' + (xScale(spendLabelPt.age) + 8).toFixed(1) + '" y="' + (ySpend(spendLabelPt.spendCap) + 18).toFixed(1) + '" class="lt-anno lt-anno-gold">4% spending capacity</text>';
+
       var handoffAnno =
         '<line x1="' + handoffX.toFixed(1) + '" y1="' + pad.t + '" x2="' + handoffX.toFixed(1) + '" y2="' + (pad.t + plotH) + '" stroke="#C7A15A" stroke-width="1.5" stroke-dasharray="4 4"/>' +
         '<path d="M' + handoffX.toFixed(1) + " " + (pad.t + 16) + " L" + (handoffX + 38).toFixed(1) + " " + (pad.t + 16) +
         " M" + (handoffX + 32).toFixed(1) + " " + (pad.t + 10) + " L" + (handoffX + 38).toFixed(1) + " " + (pad.t + 16) +
         " L" + (handoffX + 32).toFixed(1) + " " + (pad.t + 22) + '" fill="none" stroke="#C7A15A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
-        '<text x="' + (handoffX + 42).toFixed(1) + '" y="' + (pad.t + 20) + '" class="lt-anno lt-anno-gold">Trust handoff → generational</text>';
+        '<text x="' + (handoffX + 42).toFixed(1) + '" y="' + (pad.t + 20) + '" class="lt-anno lt-anno-gold">Death → trust handoff → generational</text>';
 
       var growthNote = path.id === "harbor" ? "5.5" : "5";
 
@@ -999,6 +1015,7 @@
         '<path d="' + spendTrust + '" fill="none" stroke="#C7A15A" stroke-width="1.5" stroke-dasharray="2 4" opacity="0.75"/>' +
         '<path d="' + vesselSolid + '" fill="none" stroke="#2BA8A0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>' +
         '<path d="' + vesselTrust + '" fill="none" stroke="#0B1F33" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"/>' +
+        seriesLabels +
         handoffAnno +
         crossMark +
         '<text x="' + pad.l + '" y="' + (pad.t - 16) + '" class="lt-axis-title">Vessel index (illustrative)</text>' +
@@ -1007,9 +1024,10 @@
 
       var html = "";
       html += '<div class="lifetime-chart">';
-      html += "<h3>Lifetime compounding — vessel, 4% teaching line, handoff</h3>";
+      html += '<p class="eyebrow lifetime-eyebrow">Longevity teaching map</p>';
+      html += "<h3>4% spending capacity across a compounding lifetime</h3>";
       html +=
-        '<p class="lifetime-lede">How an illustrative household vessel can compound across life stages, relate to a classic <strong>4% rule</strong> teaching line, then hand off to trust / generational wealth. Calm math for teaching — not a forecast.</p>';
+        '<p class="lifetime-lede"><strong>The 4% rule is a historical teaching heuristic:</strong> an initial withdrawal of roughly 4% of a diversified portfolio is often discussed as a retirement-spending starting point. Here, it is a line for learning how a vessel might meet lifestyle need through sustain, longevity, and handoff — never a guarantee or recommendation.</p>';
       html +=
         '<div class="lifetime-path-switch" role="group" aria-label="Lifetime path example">' +
         '<button type="button" data-lifetime-path="rivera"' +
@@ -1051,6 +1069,31 @@
         "% real teaching curve with invented surplus additions — not an expected return. Index starts at 100 (Rivera) or 220 (Harbor) at age 35. Spending capacity = 4% of that year’s vessel index. Compare the " +
         escapeHtml(other.label) +
         " via the toggle.</p>";
+
+      var burn = p.burn;
+      var baseTotal = burn.baseCategories.reduce(function (sum, c) { return sum + c.amount; }, 0);
+      var dragTotal = burn.dragCategories.reduce(function (sum, c) { return sum + c.amount; }, 0);
+      var plannedCuts = burn.dragCategories.reduce(function (sum, c) { return sum + c.cutDefault; }, 0);
+      var plannedSurplus = burn.takeHome - (baseTotal + dragTotal - plannedCuts);
+      var readiness = burn.readiness;
+      var fundingRatio = Math.max(0, plannedSurplus) / readiness.curveFundingMonthly;
+      var readinessBand = fundingRatio < 0.7 ? "under" : fundingRatio <= 1.2 ? "path" : "resilient";
+      var readinessLabel = readinessBand === "under" ? "Under-fueled" : readinessBand === "path" ? "On the path" : "Resilient overflow";
+      var markerLeft = Math.max(4, Math.min(96, fundingRatio < 0.7 ? fundingRatio / 0.7 * 31 : fundingRatio <= 1.2 ? 34 + ((fundingRatio - 0.7) / 0.5) * 32 : 69 + Math.min(1, (fundingRatio - 1.2) / 0.8) * 27));
+      var sustainStage = path.stages.filter(function (st) { return st.id === "sustain"; })[0];
+      var crossingCopy = crossAge !== null && crossAge <= sustainStage.to
+        ? "On the smooth teaching curve, 4% capacity meets lifestyle need around age " + crossAge + " in the sustain band, then remains above the need line through the illustrated longevity period."
+        : "On the smooth teaching curve, 4% capacity does not meet lifestyle need within the sustain band; burn-down would need to deepen or lifestyle need would need to fall.";
+
+      html += '<section class="goal-readiness" aria-labelledby="goal-readiness-title">';
+      html += '<div class="goal-readiness-head"><div><p class="eyebrow">Burn-Down → Risk–Reward</p><h4 id="goal-readiness-title">Illustrative goal readiness</h4></div><span class="goal-readiness-status is-' + readinessBand + '">' + readinessLabel + "</span></div>";
+      html += '<p class="goal-readiness-callout"><strong>Burn-Down fills the vessel;</strong> Risk–Reward maps whether that vessel can meet the 4% teaching line through longevity and handoff.</p>';
+      html += '<div class="goal-readiness-meter" role="img" aria-label="Illustrative readiness: ' + readinessLabel + '"><div class="goal-readiness-segments"><span class="is-under">Under-fueled</span><span class="is-path">On the path</span><span class="is-resilient">Resilient overflow</span></div><i class="goal-readiness-marker" style="left:' + markerLeft.toFixed(1) + '%" aria-hidden="true"></i></div>';
+      html += '<div class="goal-readiness-summary"><div><span>Planned burn-down surplus</span><strong>' + money(Math.max(0, plannedSurplus)) + '/mo</strong><small>' + money(plannedCuts) + '/mo of default drag cuts</small></div><div><span>Teaching-curve funding lane</span><strong>' + money(readiness.curveFundingMonthly) + '/mo</strong><small>Illustrative input—not a return target</small></div><div><span>Sustain read</span><strong>' + (crossAge !== null ? "Age ~" + crossAge : "Below need") + '</strong><small>4% capacity meets lifestyle need</small></div></div>';
+      html += '<p class="goal-readiness-profile"><strong>' + escapeHtml(p.shortName.replace(" (illustrative)", "")) + " · " + readinessLabel + ".</strong> " + escapeHtml(readiness.tie) + " " + escapeHtml(crossingCopy) + "</p>";
+      html += '<div class="goal-readiness-bands"><article class="' + (readinessBand === "under" ? "is-active" : "") + '"><strong>1 · Under-fueled</strong><p>Surplus is too thin; 4% capacity stays below need. Burn-Down must deepen or need must fall.</p></article><article class="' + (readinessBand === "path" ? "is-active" : "") + '"><strong>2 · On the path</strong><p>Surplus roughly funds the teaching curve; capacity meets need in the sustain band.</p></article><article class="' + (readinessBand === "resilient" ? "is-active" : "") + '"><strong>3 · Resilient overflow</strong><p>Surplus runs ahead of need, creating illustrative room for trust or overflow earlier.</p></article></div>';
+      html += '<div class="goal-readiness-actions"><a class="btn btn-turquoise" href="/tools/burn-down/">Open Burn-Down plan</a><p>Qualitative scenario readiness only—not a probability, Monte Carlo result, success rate, or financial advice.</p></div>';
+      html += "</section>";
       html += "</div>";
       el.innerHTML = html;
 
